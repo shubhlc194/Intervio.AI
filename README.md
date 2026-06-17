@@ -1,4 +1,4 @@
-# Interview IQ 🧠
+# Intervio.AI 🧠
 
 > Practice smart. Interview harder. Land the job.
 
