@@ -1,14 +1,34 @@
 import express from "express";
-import console from "node:console";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import authRouter from "./routes/auth.routes.js";
 import connectDb from "./config/connectDb.js";
+
 dotenv.config();
-const app=express();
- const PORT=process.env.PORT || 6000;
-app.get("/",(req,res)=>{
-    return res.json({message:"server started"})
+
+const app = express();
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+
+app.use(express.json());
+app.use(cookieParser());
+
+app.get("/test", (req, res) => {
+  res.send("Express Working");
 });
-app.listen(PORT,()=>{
-    console.log(`server running at port ${PORT}`);
-    connectDb();
-})
+
+app.use("/api/auth", authRouter);
+
+connectDb();
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on ${PORT}`);
+});
